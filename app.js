@@ -6,31 +6,20 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://thduy161103:A6DWueoYXaz2NLtO@cluster0.7dzahsd.mongodb.net/SneakerShopping?retryWrites=true&w=majority";
+const uri = "sudo delete web service GA02_PassportLocal";
 const app = express();
 
 // Connect to MongoDB
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+try {
+        await mongoose.connect('mongodb://localhost:27017/SneakerShopping', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+        });
+        console.log('Connect successfully!!!');
+    } catch (error) {
+        console.log('Connect failure!!!');
+    }
 
 // Configure passport-local strategy
 passport.use(
