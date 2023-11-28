@@ -11,11 +11,7 @@ const app = express();
 
 // Connect to MongoDB
 try {
-        mongoose.connect('mongodb://localhost:27017/SneakerShopping', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
-        });
+        mongoose.connect('mongodb://localhost:27017/SneakerShopping');
         console.log('Connect successfully!!!');
     } catch (error) {
         console.log('Connect failure!!!');
