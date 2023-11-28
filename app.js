@@ -6,22 +6,33 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "sudo delete web service GA02_PassportLocal";
+const uri = "mongodb+srv://thduy161103:A6DWueoYXaz2NLtO@cluster0.7dzahsd.mongodb.net/SneakerShopping?retryWrites=true&w=majority";
 const app = express();
 
-// Connect to MongoDB
-try {
-        mongoose.connect('mongodb://localhost:27017/SneakerShopping');
-        console.log('Connect successfully!!!');
-    } catch (error) {
-        console.log('Connect failure!!!');
-    }
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
+try {
+    // Connect the client to the server	(optional starting in v4.7)
+    client.connect();
+    // Send a ping to confirm a successful connection
+    client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+} finally {
+    // Ensures that the client will close when you finish/error
+    client.close();
+}
 // Configure passport-local strategy
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await User.findOne({ username: username });
+      const user = await client.db("SneakerShopping").collection("users").findOne({ username: username });
       if (!user) return done(null, false, { message: 'Incorrect username.' });
       if (user.password !== password) return done(null, false, { message: 'Incorrect password.' });
       return done(null, user);
@@ -37,7 +48,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await client.db("SneakerShopping").collection("users").findById(id);
     done(null, user);
   } catch (err) {
     done(err, null);
