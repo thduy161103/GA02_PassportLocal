@@ -11,7 +11,7 @@ const app = express();
 
 // Connect to MongoDB
 try {
-        await mongoose.connect('mongodb://localhost:27017/SneakerShopping', {
+        mongoose.connect('mongodb://localhost:27017/SneakerShopping', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
