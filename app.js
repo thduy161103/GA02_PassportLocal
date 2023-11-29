@@ -5,11 +5,11 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('./models/User');
-
+require("dotenv").config();
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://thduy161103:A6DWueoYXaz2NLtO@cluster0.7dzahsd.mongodb.net/SneakerShopping?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
