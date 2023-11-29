@@ -5,14 +5,13 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const {connectDB} = require('./config/dbMongo');
 require("dotenv").config();
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+connectDB();
+
 
 // Configure passport-local strategy
 passport.use(
@@ -67,7 +66,7 @@ app.use('/', authRoutes);
 app.use('/', protectedRoutes);
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
