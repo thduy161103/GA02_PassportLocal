@@ -7,7 +7,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/images/uploads/'); // Destination folder for uploaded files
+    cb(null, 'public/images/'); // Destination folder for uploaded files
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname); // File name with timestamp
